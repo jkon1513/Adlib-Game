@@ -8,27 +8,27 @@ public class Adlib_Template{
 	private LinkedList<String> wordTypes; // e.g noun, verb, name, etc... with order preserved
 	private File template;
 		
-    public Adlib_Template(String story){
-    	this.title = story;
-		this.wordTypes = new LinkedList<>();
-		this.template = createTemplate(title);
+        public Adlib_Template(String story){
+            this.title = story;
+            this.wordTypes = new LinkedList<>();
+	    this.template = createTemplate(title);
 	}
     
 	public String getTitle(){
-		return title;
+	    return title;
 	}
 
 	public LinkedList<String> getWordTypes(){
-		return wordTypes;
+	    return wordTypes;
 	}
 
 	public int getEntryCount(){
-		return wordTypes.size();
+	    return wordTypes.size();
 	}
 
-    public File getTemplate(){
-        return template;
-    }
+        public File getTemplate(){
+            return template;
+        }
 
 	/**
 	 * this method takes in a string filename and finds the correct story
@@ -40,26 +40,26 @@ public class Adlib_Template{
 	 * @return converted template file
 	  */
 	
-	public File createTemplate(String filename) throws FileNotFoundException {
+        public File createTemplate(String filename) throws FileNotFoundException {
 	    File textFile = new File(filename+".txt");
-        Scanner in = new Scanner(textFile);
+            Scanner in = new Scanner(textFile);
 	    PrintWriter out = new PrintWriter(filename+".tmpl");
 	    String regex = "<[a-z]+>"; //macthes word entry tags
         
         
-        //scans file line by line, then searches line for entry tags
-        while(in.hasNextLine()){
-            String line = in.nextLine();
-            entryScan(line);
-            line = line.replaceAll(regex,"%s");
-            out.printf("%s\n",line);
-        }
+            //scans file line by line, then searches line for entry tags
+            while(in.hasNextLine()){
+                String line = in.nextLine();
+                entryScan(line);
+                line = line.replaceAll(regex,"%s");
+                out.printf("%s\n",line);
+            }
         
-        in.close();
-        out.close();
+            in.close();
+            out.close();
         
-        return new File(filename+".tmpl");        
-    }
+            return new File(filename+".tmpl");        
+       }
    
     /**
      * @param line: a line scanned from the story file being used to create this template
