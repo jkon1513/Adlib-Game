@@ -42,7 +42,7 @@ public class Adlib_Template{
     public void populate (List <String> list){
         String wordTag = "<\\w+>";
         for(int i = 0; i < list.size(); i++) {
-            wordTag.replaceFirst(wordTag, list.get(0));
+            template = template.replaceFirst(wordTag, list.get(i));
         }
 
     }

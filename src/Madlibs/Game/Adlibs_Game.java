@@ -8,6 +8,7 @@ import java.util.ListIterator;
 public class Adlibs_Game{
     private ArrayList<String> entries;      //user entries
     private Adlib_Template template;        //story template
+    private Scanner input = new Scanner(System.in);
 
     
     public Adlibs_Game(){
@@ -31,9 +32,9 @@ public class Adlibs_Game{
         collectEntries();
         template.populate(entries);
         System.out.println(template);
+        if( wantToPlayAgain() ) {play();}
 
-        if(playAgain()){ play(); }
-        else{ System.out.println("Thanks for Playing!!"); }
+
     }
         
     //should handle the exception once tested
@@ -44,9 +45,8 @@ public class Adlibs_Game{
         System.out.println("1: testing");
         System.out.println("2: Turkeys");
 
-        Scanner in = new Scanner(System.in);
-        selection = in.nextInt();
-
+        //we dont use nextInt here because it does not consume \n causing print errors
+        selection = Integer.parseInt(input.nextLine());
 
         switch(selection){
             case 1:
@@ -56,44 +56,38 @@ public class Adlibs_Game{
             //case 3:
 
         }
-        in.close();
+        input.close();
         return null;
     }
 
 
     private void collectEntries(){ //TODO: must be tested
-        Scanner in = new Scanner(System.in);
         ListIterator l = template.getWordTypes().listIterator();
         
         for(int i = 0; i<template.getEntryCount(); i++){
             System.out.printf("please enter a %s: ", l.next());
-            entries.add(in.nextLine());
+            entries.add(input.nextLine());
             System.out.printf("\n");
         }
 
-        in.close();
     }
 
-    private boolean playAgain(){
+    private boolean wantToPlayAgain(){
         System.out.println("would you like to play again?");
-        Scanner in = new Scanner(System.in);
-        String choice = in.nextLine()
+        String choice = input.nextLine();
 
 
 
         switch (choice) {
             case "yes":
             case "y":
-                in.close();
                 return true;
             case "no":
             case "n":
-                in.close();
                 return false;
             default:
                 System.out.println(choice + " is not a valid answer. Please answer yes or no.");
-                in.close();
-                return playAgain();
+                return wantToPlayAgain();
         }
     }
 }
