@@ -1,9 +1,9 @@
 package Madlibs.Game;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.io.*;
-import java.util.Scanner;
 import java.util.ListIterator;
+import java.util.Scanner;
 
 public class Adlibs_Game{
     private ArrayList<String> entries;      //user entries
@@ -30,8 +30,10 @@ public class Adlibs_Game{
     public void play(){
         try{ template = pickStory(); } catch (FileNotFoundException e) { e.getMessage(); }
         collectEntries();
-        template.populate(entries);
-        System.out.println(template);
+        String story = template.populate(entries);
+        System.out.printf("Your Unique Story!!:\n\n");
+        System.out.println(story);
+        System.out.printf("\n\n");
         if( wantToPlayAgain() ) {play();}
 
 
@@ -43,7 +45,7 @@ public class Adlibs_Game{
 
         System.out.printf("select your adlib template by entering the corresponding number:\n\n");
         System.out.println("1: testing");
-        System.out.println("2: Turkeys");
+        System.out.println("2: Quest of love");
 
         //we dont use nextInt here because it does not consume \n causing print errors
         selection = Integer.parseInt(input.nextLine());
@@ -52,12 +54,11 @@ public class Adlibs_Game{
             case 1:
                 return new Adlib_Template("test");
             case 2:
-                return new Adlib_Template("Turkeys");
-            //case 3:
-
+                return new Adlib_Template("quest");
+            default:
+                System.out.println("That is not a valid selection, please try again");
+                return pickStory();
         }
-        input.close();
-        return null;
     }
 
 
@@ -81,6 +82,7 @@ public class Adlibs_Game{
         switch (choice) {
             case "yes":
             case "y":
+                entries.clear();
                 return true;
             case "no":
             case "n":

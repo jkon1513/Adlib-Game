@@ -39,12 +39,14 @@ public class Adlib_Template{
         return author;
     }
 
-    public void populate (List <String> list){
+    public String populate (List <String> list){
+        String story = template;
         String wordTag = "<\\w+>";
         for(int i = 0; i < list.size(); i++) {
-            template = template.replaceFirst(wordTag, list.get(i));
+           story = story.replaceFirst(wordTag, list.get(i));
         }
 
+        return story;
     }
     /**
 	 * this method takes in a string filename and finds the correct story
@@ -56,7 +58,7 @@ public class Adlib_Template{
 	  */
 	//change file path for prod version
 	private String createTemplate(String filename) throws FileNotFoundException {
-	    File textFile = new File("./src/Madlibs/Testing/"+ filename + ".txt");
+	    File textFile = new File("./Madlibs/Testing/"+ filename + ".txt");
         Scanner in = new Scanner(textFile);
         StringBuilder prototype = new StringBuilder();
 
@@ -66,7 +68,6 @@ public class Adlib_Template{
             prototype.append(line).append("\n");
         }
         in.close();
-
         return prototype.toString().trim();
     }
    
@@ -106,4 +107,4 @@ public class Adlib_Template{
             wordTypes.add(wordType);
         }
     }
-}
+
